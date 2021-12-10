@@ -1,11 +1,21 @@
 /* eslint-disable react/jsx-handler-names */
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { NextPage } from "next";
+import { parseCookies, setCookie } from "nookies";
 import { Button } from "src/components/styled";
 import { API_URL } from "src/constants/API_URL";
 import { styled } from "src/utils";
 
 const SigninPage: NextPage = () => {
+  const handleClick = () => {
+    const cookies = parseCookies();
+    console.log({ cookies });
+    setCookie(null, "fromClient", "value", {
+      maxAge: 30 * 24 * 60 * 60,
+      path: "/",
+    });
+  };
+
   return (
     <SigninPageRoot>
       <LeftSide>
@@ -19,6 +29,7 @@ const SigninPage: NextPage = () => {
             Sign in with Slack
           </Button>
         </a>
+        <button onClick={handleClick}>Set Cookie</button>
       </LeftSide>
 
       <RightSide>
