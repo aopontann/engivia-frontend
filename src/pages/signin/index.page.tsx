@@ -2,11 +2,13 @@
 /* eslint-disable @typescript-eslint/naming-convention */
 import type { NextPage } from "next";
 import { parseCookies, setCookie } from "nookies";
+import { useCookies } from "react-cookie";
 import { Button } from "src/components/styled";
 import { API_URL } from "src/constants/API_URL";
 import { styled } from "src/utils";
 
 const SigninPage: NextPage = () => {
+  const [ReactCookies, setReactCookie, removeCookie] = useCookies(["name"]);
   const handleClick = () => {
     const cookies = parseCookies();
     console.log({ cookies });
@@ -14,6 +16,10 @@ const SigninPage: NextPage = () => {
       maxAge: 30 * 24 * 60 * 60,
       path: "/",
     });
+  };
+
+  const handleClick2 = () => {
+    setReactCookie("name", "aaa", {path: "/"});
   };
 
   return (
@@ -30,6 +36,7 @@ const SigninPage: NextPage = () => {
           </Button>
         </a>
         <button onClick={handleClick}>Set Cookie</button>
+        <button onClick={handleClick2}>Set Cookie(react-cookie)</button>
       </LeftSide>
 
       <RightSide>

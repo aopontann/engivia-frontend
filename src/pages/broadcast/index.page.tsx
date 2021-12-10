@@ -2,6 +2,7 @@
 /* eslint-disable indent */
 import type { NextPage } from "next";
 import { useRecoilValue } from "recoil";
+import { useCookies } from "react-cookie";
 import { BroadcastItem, NextLink } from "src/components";
 import { userInfoState } from "src/components/atoms";
 import { FetcherExample } from "src/components/FetcherExample";
@@ -23,6 +24,8 @@ export type BroadcastListType = {
 
 const BroadcastPage: NextPage = () => {
   const { data, isError, isLoading } = useGetSWR<BroadcastListType[]>("/broadcast");
+  const [ReactCookies, setReactCookie, removeCookie] = useCookies(["name"]);
+
 
   const userInfo = useRecoilValue(userInfoState);
 
@@ -31,6 +34,7 @@ const BroadcastPage: NextPage = () => {
       {data && <FetcherExample />}
 
       <Title>放送一覧</Title>
+      <p>{ReactCookies.name}</p>
 
       {isLoading ? (
         "loading"
